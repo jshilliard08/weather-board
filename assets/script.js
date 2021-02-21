@@ -1,4 +1,5 @@
 //const apiKey = "95487d5cbd29d0353364e1da4ff4703f"
+  //const apiKey = "95487d5cbd29d0353364e1da4ff4703f"
 const inputEl = document.getElementById("city-input");
 const searchEl = document.getElementById("search-button");
 const clearEl = document.getElementById("clear-history");
@@ -77,20 +78,6 @@ function getWeather(cityName) {
                         const forecastHumidityEl = document.createElement("p");
                         forecastHumidityEl.innerHTML = "Humidity: " + response.data.list[forecastIndex].main.humidity + "%";
                         forecastEls[i].append(forecastHumidityEl);
-                        let lat = response.data.coord.lat;
-                        let lon = response.data.coord.lon;
-                        let cnt = response.data.cnt
-                        let UVQueryURL = "http://api.openweathermap.org/data/2.5/uvi/forecast?lat=" lat + "&lon=" + lon + "&cnt=" + cnt + "&appid=" + APIKey;
-                        axios.get(UVQueryURL)
-                            .then(function (response) {
-                                let UVIndex = document.createElement("span");
-                                UVIndex.innerHTML = response.data.value;
-                                const forecastUVEl = document.createElement("p");
-                                forecastUVEl.innerHTML = "UV Index: ";
-                                forecastUVEl.append(UVIndex);
-                                console.log(UVIndex)
-
-
                             }
             })
         });
@@ -133,8 +120,3 @@ renderSearchHistory();
 if (searchHistory.length > 0) {
     getWeather(searchHistory[searchHistory.length - 1]);
 }
-
-
-//  Save user's search requests and display them underneath search form
-//  When page loads, automatically generate current conditions and 5-day forecast for the last city the user searched for
-
