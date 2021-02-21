@@ -1,5 +1,4 @@
 //const apiKey = "95487d5cbd29d0353364e1da4ff4703f"
-  //const apiKey = "95487d5cbd29d0353364e1da4ff4703f"
 const inputEl = document.getElementById("city-input");
 const searchEl = document.getElementById("search-button");
 const clearEl = document.getElementById("clear-history");
@@ -18,12 +17,12 @@ const APIKey = "95487d5cbd29d0353364e1da4ff4703f";
 
 //Search by city name 
 function getWeather(cityName) {
-    //  Using saved city name, execute a current condition get request from open weather map api
+//Requestung current weather by city name with API
     let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
     axios.get(queryURL)
         .then(function (response) {
             console.log(response);
-            //  Parse response to display current conditions
+            //  
             //  Method for using "date" objects obtained from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
             const currentDate = new Date(response.data.dt * 1000);
             console.log(currentDate);
@@ -49,12 +48,11 @@ function getWeather(cityName) {
                     currentUVEl.append(UVIndex);
                     console.log(UVIndex)
                 });
-            //  Using saved city name, execute a 5-day forecast get request from open weather map api
-            let cityID = response.data.id;
-            let forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityID + "&appid=" + APIKey;
+//Used city name to get 5-Day forecast
+            let forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
             axios.get(forecastQueryURL)
                 .then(function (response) {
-                    //  Parse response to display forecast for next 5 days underneath current conditions
+//Create a response based on the previous criteria
                     console.log(response);
                     const forecastEls = document.querySelectorAll(".forecast");
                     for (i = 0; i < forecastEls.length; i++) {
