@@ -1,20 +1,34 @@
-$(document).ready(function () {
-    {
-        $("#search-button").click(function () {
+var searchCity = $("#city-input");
+var searchButton = $("#search-button");
+var clearButton = $("#clear-history");
+var currentCity = $("#city-name");
+var currentTemperature = $("#temperature");
+var currentHumidty= $("#humidity");
+var currentWindSpeed = $("#wind-speed");
+var currentUVindex= $("#uv-index");
 
-            var cityName = $("#search-city").val();
 
-            const APIKey = "95487d5cbd29d0353364e1da4ff4703f";
+$(document).ready(function(){
+    
+        $("#search-button").click(function(){
 
+            var cityName = $("#city-input").val();
+
+            var APIKey = "95487d5cbd29d0353364e1da4ff4703f";
+
+            
             if (cityName != ""){
+
+                var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
 
                 $.ajax({
 
-                    url: "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + APIKey,
-                    type: "GET",
-                    dataType: "jsonp",
+                    url:queryURL,
+                    method: "GET",
+                    type: "jsonp",
                     success: function (data) {
                         console.log(data);
+                        currentWeather(data)
                     }
                 });
 
@@ -23,3 +37,12 @@ $(document).ready(function () {
             }
         });
     });
+function currentWeather(response){
+    console.log(currentTemperature)
+    currentCity.text(response.name);
+    currentTemperature.text("Temperature:" + response.main.temp);
+    currentHumidty.text("Humidity:" + response.main.humidity);
+    currentWindSpeed.text("Wind Speed:" + response.wind.speed);        
+}
+function forecastWeather(response)
+    
