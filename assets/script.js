@@ -39,10 +39,25 @@ $(document).ready(function(){
     });
 function currentWeather(response){
     console.log(currentTemperature)
-    currentCity.text(response.name);
-    currentTemperature.text("Temperature:" + response.main.temp);
-    currentHumidty.text("Humidity:" + response.main.humidity);
-    currentWindSpeed.text("Wind Speed:" + response.wind.speed);        
+    console.log(response);
+    //Get weather icon from data and creating a url 
+    var weathericon= response.weather[0].icon;
+    var iconurl="https://openweathermap.org/img/wn/"+weathericon +"@2x.png";
+    //Used a date method found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+    var date=new Date(response.dt*1000).toLocaleDateString();
+    //Displaying the city's name, the date and an cloud icon
+    $(currentCity).html(response.name +"("+date+")" + "<img src="+iconurl+">");
+    //Converting the temperature into Fahrenheit
+    var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+    //Displaying temperature in Fahrenheit
+    $(currentTemperature).html("Temperature: " + (tempF).toFixed(2)+"&#8457");
+    //Displaying the Humidity
+    $(currentHumidty).html("Humidity: " + response.main.humidity+"%");
+    //Converting to MPH
+    var ws=response.wind.speed;
+    var windsmph=(ws*2.237).toFixed(1);
+    //Displaying windspeed in MPH
+    $(currentWindSpeed).html("Wind Speed: " + windsmph+"MPH");      
 }
-function forecastWeather(response)
+//function forecastWeather(response)
     
