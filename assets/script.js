@@ -57,7 +57,26 @@ function currentWeather(response){
     var ws=response.wind.speed;
     var windsmph=(ws*2.237).toFixed(1);
     //Displaying windspeed in MPH
-    $(currentWindSpeed).html("Wind Speed: " + windsmph+"MPH");      
+    $(currentWindSpeed).html("Wind Speed: " + windsmph+"MPH"); 
+    
+
+   function currentUV(lon,lat){
+    var lat = response.data.coord.lat; 
+    var lon = response.data.coord.lon;
+    //lets build the url for uvindex.
+    var uvURL="https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
+    $.ajax({
+            url:uvURL,
+            method:"GET"
+            currentUV (response) {
+                console.log(data);
+                currentUVindex(data)
+                currentUVindex.html.response.val
+    }});
+        
+        
 }
+}
+
 //function forecastWeather(response)
     
