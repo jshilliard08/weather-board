@@ -5,16 +5,14 @@ var currentCity = $("#city-name");
 var currentTemperature = $("#temperature");
 var currentHumidty= $("#humidity");
 var currentWindSpeed = $("#wind-speed");
-var currentUVindex= $("#uv-index");
-
+var currentUVindex= $("#UV-index");
+var APIKey = "95487d5cbd29d0353364e1da4ff4703f"
 
 $(document).ready(function(){
     
         $("#search-button").click(function(){
 
             var cityName = $("#city-input").val();
-
-            var APIKey = "95487d5cbd29d0353364e1da4ff4703f";
 
             
             if (cityName != ""){
@@ -29,6 +27,10 @@ $(document).ready(function(){
                     success: function (data) {
                         console.log(data);
                         currentWeather(data)
+                        var lat = data.coord.lat
+                        var lon = data.coord.lon
+                        UVIndex(lat,lon)
+                        
                     }
                 });
 
@@ -58,25 +60,34 @@ function currentWeather(response){
     var windsmph=(ws*2.237).toFixed(1);
     //Displaying windspeed in MPH
     $(currentWindSpeed).html("Wind Speed: " + windsmph+"MPH"); 
+}
+function UVIndex(lat,lon) {
+    //passing lat and lon data from current weather URL
+    console.log(lat)
+    console.log(lon)
+//Getting data from UV index URL
+    var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon="+ lon + "&appid=" + APIKey
+
+    $.ajax({
+
+        url:uvURL,
+        method: "GET",
+        success: function(data){
+            console.log(data)
+        $(currentUVindex).html("UV Index: " + data.value)
+        }
     
 
-   function currentUV(lon,lat){
-    var lat = response.data.coord.lat; 
-    var lon = response.data.coord.lon;
-    //lets build the url for uvindex.
-    var uvURL="https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
-    $.ajax({
-            url:uvURL,
-            method:"GET"
-            currentUV (response) {
-                console.log(data);
-                currentUVindex(data)
-                currentUVindex.html.response.val
-    }});
-        
-        
-}
+
+        })
+
 }
 
+function forecastWeather(){
+    console.log()
+
+    var forecastURL = ""
+}
+forecastWeather()
 //function forecastWeather(response)
     
