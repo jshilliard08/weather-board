@@ -8,7 +8,16 @@ var currentWindSpeed = $("#wind-speed");
 var currentUVindex= $("#UV-index");
 var APIKey = "95487d5cbd29d0353364e1da4ff4703f";
 
+for (var i = 0; i < localStorage.length; i++) {
 
+    var city = localStorage.getItem(i);
+    // console.log(localStorage.getItem("City"));
+    var cityName = $(".list-group").addClass("list-group-item");
+
+    cityName.append("<li>" + city + "</li>");
+}
+
+var keyCount = 0;
 
 $(document).ready(function(){
     
@@ -32,6 +41,11 @@ $(document).ready(function(){
                         var lon = data.coord.lon
                         UVIndex(lat,lon)
                         forecastWeather(lat,lon)
+                        var cityName = $(".list-group").addClass("list-group-item");
+                        cityName.append("<li>" + data.name + "</li>");
+                        // Local storage
+                        var local = localStorage.setItem(keyCount, data.name);
+                        keyCount = keyCount + 1;
                         
                     }
                 });
@@ -121,13 +135,10 @@ function forecastWeather(lat, lon){
                 forecastEls[i].append(forecastWindSpeedEl);
                 }
         }
-    });
+    })
 }
-for (var i = 0; i < localStorage.length; i++) {
-
-    var city = localStorage.getItem(i);
-    console.log(localStorage.getItem("City"));
-    var cityName = $(".list-group").addClass("list-group-item");
-
-    cityName.append("<li>" + city + "</li>");
-}
+$("#clear-history").click(function() {
+    console.log();
+    localStorage.clear();
+    $(".list-group").html = ("");
+})
