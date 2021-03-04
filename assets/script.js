@@ -1,3 +1,4 @@
+//declaring variables
 var searchCity = $("#city-input");
 var searchButton = $("#search-button");
 var clearButton = $("#clear-history");
@@ -7,7 +8,7 @@ var currentHumidty= $("#humidity");
 var currentWindSpeed = $("#wind-speed");
 var currentUVindex= $("#UV-index");
 var APIKey = "95487d5cbd29d0353364e1da4ff4703f";
-
+//setting forloop for local storage
 for (var i = 0; i < localStorage.length; i++) {
 
     var city = localStorage.getItem(i);
@@ -18,7 +19,7 @@ for (var i = 0; i < localStorage.length; i++) {
 }
 
 var keyCount = 0;
-
+//call current weather API and display to HTML and converting some metrics
 $(document).ready(function(){
     
         $("#search-button").click(function(){
@@ -37,6 +38,7 @@ $(document).ready(function(){
                     success: function (data) {
                         console.log(data);
                         currentWeather(data)
+                        //setting UV index variables
                         var lat = data.coord.lat
                         var lon = data.coord.lon
                         UVIndex(lat,lon)
@@ -98,7 +100,7 @@ function UVIndex(lat,lon) {
         })
 
 }
-//function forecastWeather(response)
+//calls and creates a forecast element for 5 day forecast 
 function forecastWeather(lat, lon){
 
     var forecastWeatherURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&units=imperial";
@@ -137,8 +139,8 @@ function forecastWeather(lat, lon){
         }
     })
 }
+//Clears local storage and list element
 $("#clear-history").click(function() {
-    console.log();
     localStorage.clear();
-    $(".list-group").html = ("");
+    $(".list-group").empty();
 })
